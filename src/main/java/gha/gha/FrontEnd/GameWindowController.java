@@ -1,8 +1,8 @@
 package gha.gha.FrontEnd;
 
-import gha.gha.gameLogic.Employee;
-import gha.gha.gameLogic.GameLogic;
-import gha.gha.gameLogic.Project;
+import gha.gha.BackEnd.Employee;
+import gha.gha.BackEnd.GameLogic;
+import gha.gha.BackEnd.Project;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +22,6 @@ import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class GameWindowController implements Initializable {

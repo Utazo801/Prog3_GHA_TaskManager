@@ -1,7 +1,7 @@
 package gha.gha.Services;
 
-import gha.gha.gameLogic.GameLogic;
-import gha.gha.gameLogic.Project;
+import gha.gha.BackEnd.GameLogic;
+import gha.gha.BackEnd.Project;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;

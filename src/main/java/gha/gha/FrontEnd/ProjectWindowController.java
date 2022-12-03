@@ -1,10 +1,9 @@
 package gha.gha.FrontEnd;
 
 import gha.gha.Services.ProjectRunningService;
-import gha.gha.gameLogic.Employee;
-import gha.gha.gameLogic.GameLogic;
-import gha.gha.gameLogic.Project;
-import javafx.concurrent.Task;
+import gha.gha.BackEnd.Employee;
+import gha.gha.BackEnd.GameLogic;
+import gha.gha.BackEnd.Project;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -45,7 +44,7 @@ public class ProjectWindowController {
     private Button PauseBtn;
 
     @FXML
-    private ListView<gha.gha.gameLogic.Employee> EmployeeListView;
+    private ListView<gha.gha.BackEnd.Employee> EmployeeListView;
 
     @FXML
     private Label timeLabel;
@@ -88,7 +87,7 @@ public class ProjectWindowController {
             ProjectProgBar.setProgress(0);
         }
 
-        EmployeeListView = (ListView<gha.gha.gameLogic.Employee>) root.lookup("#EmployeeListView");
+        EmployeeListView = (ListView<gha.gha.BackEnd.Employee>) root.lookup("#EmployeeListView");
         if (EmployeeListView != null) EmployeeListView.setItems(p.getAssignedEmployees());
 
         stage.setScene(scene);

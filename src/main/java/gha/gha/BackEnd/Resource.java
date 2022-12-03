@@ -1,9 +1,4 @@
-package gha.gha.gameLogic;
-
-import javafx.concurrent.Task;
-
-import java.security.PublicKey;
-import java.util.Random;
+package gha.gha.BackEnd;
 
 public class Resource  {
     protected String name;

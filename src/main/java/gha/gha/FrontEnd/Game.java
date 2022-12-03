@@ -1,7 +1,7 @@
 package gha.gha.FrontEnd;
 
 
-import gha.gha.gameLogic.GameLogic;
+import gha.gha.BackEnd.GameLogic;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

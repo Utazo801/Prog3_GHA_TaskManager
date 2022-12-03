@@ -1,4 +1,4 @@
-package gha.gha.gameLogic;
+package gha.gha.BackEnd;
 
 public class Employee extends Resource{
     private double salary;

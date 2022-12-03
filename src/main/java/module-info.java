@@ -9,10 +9,8 @@ module gha.gha {
     requires eu.hansolo.tilesfx;
     requires com.google.gson;
 
-    opens gha.gha to javafx.fxml;
-    exports gha.gha;
-    exports gha.gha.gameLogic;
-    opens gha.gha.gameLogic to javafx.fxml,com.google.gson;
+    exports gha.gha.BackEnd;
+    opens gha.gha.BackEnd to javafx.fxml,com.google.gson;
     exports gha.gha.FrontEnd;
     opens gha.gha.FrontEnd to javafx.fxml;
 }

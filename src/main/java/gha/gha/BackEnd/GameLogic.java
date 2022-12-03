@@ -1,4 +1,4 @@
-package gha.gha.gameLogic;
+package gha.gha.BackEnd;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

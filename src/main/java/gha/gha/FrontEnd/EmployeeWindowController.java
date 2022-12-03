@@ -1,8 +1,8 @@
 package gha.gha.FrontEnd;
 
-import gha.gha.gameLogic.Employee;
-import gha.gha.gameLogic.GameLogic;
-import gha.gha.gameLogic.Project;
+import gha.gha.BackEnd.Employee;
+import gha.gha.BackEnd.GameLogic;
+import gha.gha.BackEnd.Project;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;

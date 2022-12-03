@@ -1,4 +1,4 @@
-package gha.gha.gameLogic;
+package gha.gha.BackEnd;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
