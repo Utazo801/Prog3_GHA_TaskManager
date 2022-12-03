@@ -1,0 +1,82 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'org.beryx.jlink' version '2.25.0'
+    id 'com.gluonhq.gluonfx-gradle-plugin' version '1.0.15'
+}
+
+group 'gha'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.9.0'
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/resources/FXML", "src/main/resources/JSON"
+        }
+    }
+}
+sourceCompatibility = '18'
+targetCompatibility = '18'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    mainModule = 'gha.gha'
+    mainClass = 'gha.gha.FrontEnd.Game'
+}
+
+javafx {
+    version = '18.0.1'
+    modules = ['javafx.controls', 'javafx.fxml', 'javafx.web','javafx.swing']
+}
+
+
+
+dependencies {
+    implementation('org.controlsfx:controlsfx:11.1.2')
+    implementation('com.dlsc.formsfx:formsfx-core:11.5.0') {
+        exclude(group: 'org.openjfx')
+    }
+    implementation('org.kordamp.ikonli:ikonli-javafx:12.3.1')
+    implementation('eu.hansolo:tilesfx:17.1.15') {
+        exclude(group: 'org.openjfx')
+    }
+    implementation 'eu.hansolo.fx:countries:17.0.23'
+    implementation 'eu.hansolo.fx:heatmap:17.0.12'
+    implementation 'eu.hansolo:toolboxfx:17.0.31'
+    implementation 'eu.hansolo:toolbox:17.0.14'
+    implementation 'org.openjfx:javafx-swing:19'
+    implementation 'eu.hansolo:tilesfx:17.1.15'
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+
+    implementation 'com.google.code.gson:gson:2.10'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jlink {
+    imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = 'app'
+    }
+}
+
+jlinkZip {
+    group = 'distribution'
+}
