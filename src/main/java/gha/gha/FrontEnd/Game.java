@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -61,7 +62,11 @@ public class Game extends Application {
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
-                GameLogic.CloseApplication();
+                try {
+                    new GameLogic().CloseApplication();
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
                 Platform.exit();
                 System.exit(0);
             }

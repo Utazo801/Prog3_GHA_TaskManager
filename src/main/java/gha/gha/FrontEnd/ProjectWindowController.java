@@ -4,6 +4,7 @@ import gha.gha.Services.ProjectRunningService;
 import gha.gha.BackEnd.Employee;
 import gha.gha.BackEnd.GameLogic;
 import gha.gha.BackEnd.Project;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -136,6 +137,7 @@ public class ProjectWindowController {
                 }
             });
         }
+
 
     }
 }

@@ -3,6 +3,8 @@ package gha.gha.FrontEnd;
 import gha.gha.BackEnd.Employee;
 import gha.gha.BackEnd.GameLogic;
 import gha.gha.BackEnd.Project;
+import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -156,7 +158,9 @@ public class EmployeeWindowController {
             if (e.getCurProject() == null) {
                 assignProjectBox.setValue(null);
             } else {
+
                 assignProjectBox.setValue(e.getCurProject());
+
             }
         }
 
@@ -176,7 +180,11 @@ public class EmployeeWindowController {
 
         assignProjectBox.setOnAction((event) -> {
             Project selectedItem = assignProjectBox.getSelectionModel().getSelectedItem();
-
+            for (Project p: gameLogic.getProjects()){
+                if (p.getAssignedEmployees() != null && p != selectedItem){
+                    Platform.runLater(()-> p.getAssignedEmployees().remove(e));
+                }
+            }
             e.setCurProject(selectedItem);
             selectedItem.addAssignedEmployees(e);
         });
@@ -243,7 +251,6 @@ public class EmployeeWindowController {
             empDescText.setEditable(true);
         }
 
-        //TODO FileChooser for profile pictures
         profileImage = (ImageView) root.lookup("#profileImage");
         if (profileImage != null) {
             profileImage.setUserData(emp);

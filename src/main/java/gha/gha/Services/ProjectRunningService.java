@@ -1,5 +1,6 @@
 package gha.gha.Services;
 
+import gha.gha.BackEnd.Employee;
 import gha.gha.BackEnd.GameLogic;
 import gha.gha.BackEnd.Project;
 import javafx.application.Platform;
@@ -46,7 +47,9 @@ public class ProjectRunningService extends Service<Void> {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        gameLogic.CheckStatusForProjects();
+                        for(Employee e: p.getAssignedEmployees()){
+                            p.getAssignedEmployees().remove(e);
+                        }
                     }
                 });
                 return null;

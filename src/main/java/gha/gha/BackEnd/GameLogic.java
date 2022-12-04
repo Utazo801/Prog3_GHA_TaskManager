@@ -11,8 +11,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class GameLogic {
-    private static  ObservableList<Employee> employees;
-    private static  ObservableList<Project> projects;
+    private final ObservableList<Employee> employees;
+    private final ObservableList<Project> projects;
     private double budget;
 
     public GameLogic() throws FileNotFoundException {
@@ -60,13 +60,11 @@ public class GameLogic {
     }
 
     public ObservableList<Employee> getEmployees() {
-        ObservableList<Employee> employeeObservableList = FXCollections.observableList(employees);
-        return employeeObservableList;
+        return FXCollections.observableList(employees);
     }
 
     public ObservableList<Project> getProjects() {
-        ObservableList<Project> projectObservableList = FXCollections.observableList(projects);
-        return projectObservableList;
+        return FXCollections.observableList(projects);
     }
 
     public ArrayList<Employee> ReadEmployeeData() throws FileNotFoundException {
@@ -100,7 +98,7 @@ public class GameLogic {
         }
     }
 
-    public static void CloseApplication(){
+    public void CloseApplication(){
 
         //Saving private employeeeeeee
         File fEmp = new File("src/main/resources/employeeData.json");
