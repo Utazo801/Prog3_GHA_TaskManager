@@ -138,6 +138,24 @@ public class GameWindowController implements Initializable {
     @FXML
     public void handleNewEmployeeClick(ActionEvent actionEvent) {
         new EmployeeWindowController(gameLogic).DisplayNewEmployee();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                employeeListView.setItems(gameLogic.getEmployees());
+                employeeListView.setCellFactory(param -> new ListCell<>() {
+                    @Override
+                    protected void updateItem(Employee item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty || item == null || item.getName() == null) {
+                            setText(null);
+                        } else {
+                            setText(item.getName());
+                        }
+                    }
+                });
+            }
+        });
 
     }
 

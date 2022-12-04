@@ -103,16 +103,16 @@ public class GameLogic {
     public static void CloseApplication(){
 
         //Saving private employeeeeeee
-        File f = new File("/employeeData.json");
+        File fEmp = new File("src/main/resources/employeeData.json");
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        if (!f.exists()) {
+        if (!fEmp.exists()) {
             try {
-                f.createNewFile();
+                fEmp.createNewFile();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        try (FileWriter fw = new FileWriter(f)){
+        try (FileWriter fw = new FileWriter(fEmp)){
             gson.toJson(employees,fw);
         }
         catch(IOException e){
@@ -120,7 +120,7 @@ public class GameLogic {
         }
         System.out.println("Saved employees");
         //saving the modified projects
-        File fProj = new File("/projectData.json.json");
+        File fProj = new File("src/main/resources/projectData.json");
         Gson gsonProj = new GsonBuilder().setPrettyPrinting().create();
         if (!fProj.exists()) {
             try {
@@ -129,7 +129,7 @@ public class GameLogic {
                 throw new RuntimeException(e);
             }
         }
-        try (FileWriter fw = new FileWriter(f)){
+        try (FileWriter fw = new FileWriter(fProj)){
             gsonProj.toJson(projects,fw);
         }
         catch(IOException e){

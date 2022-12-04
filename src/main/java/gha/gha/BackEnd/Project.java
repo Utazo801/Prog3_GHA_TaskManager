@@ -107,7 +107,10 @@ public class Project extends Resource {
     }
 
     public void FinishProject() {
-        assignedEmployees.removeAll(assignedEmployees);
+
+        for(Employee e: assignedEmployees){
+            assignedEmployees.remove(e);
+        }
         completion = BigDecimal.valueOf(Double.parseDouble("0.0"));
         state = ProjectSate.IDLE;
     }

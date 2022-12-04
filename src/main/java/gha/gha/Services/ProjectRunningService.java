@@ -2,6 +2,7 @@ package gha.gha.Services;
 
 import gha.gha.BackEnd.GameLogic;
 import gha.gha.BackEnd.Project;
+import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.concurrent.WorkerStateEvent;
@@ -42,7 +43,12 @@ public class ProjectRunningService extends Service<Void> {
                         updateProgress(p.getCompletion(), p.getTimeCost());
                     }
                 }
-                gameLogic.CheckStatusForProjects();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        gameLogic.CheckStatusForProjects();
+                    }
+                });
                 return null;
             }
         };

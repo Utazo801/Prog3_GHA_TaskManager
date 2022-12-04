@@ -12,12 +12,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -32,7 +35,7 @@ public class EmployeeWindowController {
     private final AtomicInteger checkSum;
 
 
-    private Employee emp = new Employee();
+    private final Employee emp = new Employee();
     @FXML
     private TextField nameText;
 
@@ -62,7 +65,7 @@ public class EmployeeWindowController {
         this.e = e;
         this.gameLogic = gameLogic;
         checkSum = new AtomicInteger(-7);
-        saveBtn = new Button("Save employee");
+        saveBtn = null;
     }
 
     public EmployeeWindowController(GameLogic gameLogic) {
@@ -77,6 +80,9 @@ public class EmployeeWindowController {
     }
 
     public void display() {
+        if (stage != null) {
+            stage = null;
+        }
         stage = new Stage();
         stage.initModality(Modality.WINDOW_MODAL);
         try {
@@ -133,8 +139,15 @@ public class EmployeeWindowController {
 
         }
 
+
         profileImage = (ImageView) root.lookup("#profileImage");
-        if (profileImage != null) profileImage.setImage(new Image(e.getPicture()));
+        if (profileImage != null) {
+            profileImage.setUserData(e);
+            if (e.getPicture() != null && !e.getPicture().equals("")) {
+                profileImage.setImage(new Image(e.getPicture()));
+            }
+
+        }
 
         //ChoiceBox
         assignProjectBox = (ComboBox<Project>) root.lookup("#assignProjectBox");
@@ -162,14 +175,13 @@ public class EmployeeWindowController {
         });
 
         assignProjectBox.setOnAction((event) -> {
-            int selectedIndex = assignProjectBox.getSelectionModel().getSelectedIndex();
             Project selectedItem = assignProjectBox.getSelectionModel().getSelectedItem();
 
             e.setCurProject(selectedItem);
             selectedItem.addAssignedEmployees(e);
         });
 
-
+        stage.setUserData(e);
         stage.setScene(scene);
         stage.show();
     }
@@ -233,7 +245,12 @@ public class EmployeeWindowController {
 
         //TODO FileChooser for profile pictures
         profileImage = (ImageView) root.lookup("#profileImage");
-        if (profileImage != null) profileImage.setImage(null);
+        if (profileImage != null) {
+            profileImage.setUserData(emp);
+            if (e.getPicture() != null && !e.getPicture().equals("")) {
+                profileImage.setImage(new Image(e.getPicture()));
+            }
+        }
 
         //ChoiceBox
         assignProjectBox = (ComboBox<Project>) root.lookup("#assignProjectBox");
@@ -261,7 +278,6 @@ public class EmployeeWindowController {
         });
 
         assignProjectBox.setOnAction((event) -> {
-            int selectedIndex = assignProjectBox.getSelectionModel().getSelectedIndex();
             Project selectedItem = assignProjectBox.getSelectionModel().getSelectedItem();
 
             emp.setCurProject(selectedItem);
@@ -269,6 +285,7 @@ public class EmployeeWindowController {
         });
 
 
+        assert saveBtn != null;
         saveBtn.setFont(new Font("Impact", 24));
         saveBtn.setAlignment(Pos.CENTER);
         saveBtn.setPadding(new Insets(10, 10, 10, 10));
@@ -276,7 +293,7 @@ public class EmployeeWindowController {
         Label ErrorLbl = new Label("");
         ErrorLbl.setFont(new Font("Impact", 24));
         ErrorLbl.setTextFill(Color.RED);
-        ErrorLbl.setText("itt vagyok");
+
 
         nameText.textProperty().addListener((arg0, oldNameValue, newNameValue) -> {
             AtomicInteger nameValidator = new AtomicInteger(-1);
@@ -339,7 +356,7 @@ public class EmployeeWindowController {
             AtomicInteger ageValidator = new AtomicInteger(-1);
 
             if (!newNameValue.isBlank()) {
-                Integer age;
+                int age;
                 try {
                     age = Integer.parseInt(ageText.getText());
                     emp.setAge(age);
@@ -443,7 +460,21 @@ public class EmployeeWindowController {
                 System.out.println("Welcome: " + emp.getName() + " to the company!");
                 gameLogic.addEmployee(emp);
                 stage.close();
+
             });
+        }
+    }
+
+    @FXML
+    public void handleMouseClick(MouseEvent event){
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Choose a Profile Picture");
+        File f = chooser.showOpenDialog(stage);
+        if (f != null) {
+            e = (Employee) profileImage.getUserData();
+            e.setPicture(f.getPath());
+            profileImage.setImage(new Image(e.getPicture()));
         }
     }
 }

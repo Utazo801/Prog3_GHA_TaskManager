@@ -56,13 +56,18 @@ public class Game extends Application {
         stage = (Stage) startButton.getScene().getWindow();
         stage.setScene(new Scene(root, 640, 640));
         stage.show();
+
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                GameLogic.CloseApplication();
+                Platform.exit();
+                System.exit(0);
+            }
+        });
     }
 
-    @FXML
-    public void exitApplication(ActionEvent event) {
-        GameLogic.CloseApplication();
-        Platform.exit();
-    }
 
     @Override
     public void stop() throws Exception {
