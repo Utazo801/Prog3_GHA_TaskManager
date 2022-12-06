@@ -58,5 +58,15 @@
     "hobby": "Testing",
     "age": 18,
     "name": "Alex"
+  },
+  {
+    "salary": 1896.0,
+    "experience": 1.212,
+    "workRate": 0.9,
+    "description": "TEsting",
+    "picture": "",
+    "hobby": "TESTING",
+    "age": 19,
+    "name": "HEllo"
   }
 ]

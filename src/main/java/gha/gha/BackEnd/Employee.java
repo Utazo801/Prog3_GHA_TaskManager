@@ -1,13 +1,23 @@
 package gha.gha.BackEnd;
 
+import com.google.gson.annotations.Expose;
+
 public class Employee extends Resource{
+    @Expose
     private double salary;
+    @Expose
     private double experience;
+    @Expose
     private double workRate;
+    @Expose
     private String description;
+    @Expose
     private String picture;
+    @Expose
     private String hobby;
+    @Expose
     private int age;
+
     private Project curProject;
 
     //name, salary, experience,workRate, picture, age, description, traits[], hobby

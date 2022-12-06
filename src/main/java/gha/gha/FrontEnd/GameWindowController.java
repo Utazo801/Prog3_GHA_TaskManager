@@ -35,11 +35,7 @@ public class GameWindowController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try {
-            gameLogic = new GameLogic();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        gameLogic = GameLogic.getInstance();
         projectListView.setItems(gameLogic.getProjects());
         employeeListView.setItems(gameLogic.getEmployees());
 

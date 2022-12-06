@@ -6,6 +6,7 @@ import gha.gha.BackEnd.Project;
 import javafx.application.Platform;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
+import javafx.concurrent.Worker;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ProgressBar;
@@ -24,7 +25,13 @@ public class ProjectRunningService extends Service<Void> {
         setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent event) {
-                //result = new String("Success running project "+ p.getName());
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        gameLogic.CheckStatusForProjects();
+                    }
+                });
+
             }
         });
     }
@@ -38,20 +45,12 @@ public class ProjectRunningService extends Service<Void> {
                 while (p.getState() != Project.ProjectSate.COMPLETED) {
                     if (p.getAssignedEmployees().size() > 0) {
                         p.RunProject();
-                        i++;
-                        System.out.println(i);
-                        System.out.println("Project " + p.getName() + " state: " + p.getCompletion());
-                        updateProgress(p.getCompletion(), p.getTimeCost());
+                        Thread.sleep(1000);
+                        System.out.println("Project " + p.getName() + " state: " + p.getCompletion()+ " %");
+                        updateProgress(p.getCompletion(), 1);
+
                     }
                 }
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        for(Employee e: p.getAssignedEmployees()){
-                            p.getAssignedEmployees().remove(e);
-                        }
-                    }
-                });
                 return null;
             }
         };

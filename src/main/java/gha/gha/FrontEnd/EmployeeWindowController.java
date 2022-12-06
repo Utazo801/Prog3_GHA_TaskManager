@@ -4,7 +4,6 @@ import gha.gha.BackEnd.Employee;
 import gha.gha.BackEnd.GameLogic;
 import gha.gha.BackEnd.Project;
 import javafx.application.Platform;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -254,8 +253,8 @@ public class EmployeeWindowController {
         profileImage = (ImageView) root.lookup("#profileImage");
         if (profileImage != null) {
             profileImage.setUserData(emp);
-            if (e.getPicture() != null && !e.getPicture().equals("")) {
-                profileImage.setImage(new Image(e.getPicture()));
+            if (emp.getPicture() != null && !emp.getPicture().equals("")) {
+                profileImage.setImage(new Image(emp.getPicture()));
             }
         }
 

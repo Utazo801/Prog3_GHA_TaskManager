@@ -9,16 +9,28 @@ import javafx.collections.ObservableList;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class GameLogic {
-    private final ObservableList<Employee> employees;
-    private final ObservableList<Project> projects;
+    private static ObservableList<Employee> employees;
+    private static ObservableList<Project> projects;
     private double budget;
-
-    public GameLogic() throws FileNotFoundException {
+    private static GameLogic game_instance = null;
+    private GameLogic() throws FileNotFoundException {
         budget = 10000.0;
         employees = FXCollections.observableList(ReadEmployeeData());
         projects= FXCollections.observableList(ReadProjectData());
+    }
+
+    public static GameLogic getInstance(){
+        if (game_instance == null){
+            try {
+                game_instance = new GameLogic();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return game_instance;
     }
 
     //TODO
@@ -40,6 +52,8 @@ public class GameLogic {
     }
     public void PayForProject(Project p){
         budget -= p.getCost();
+        p.setValue(p.getValue() *1.1);
+
         p.setCost(p.getCost() *1.02);
     }
 
@@ -51,8 +65,13 @@ public class GameLogic {
             if (proj.getState() == Project.ProjectSate.COMPLETED){
                 budget+= proj.getValue();
                 PayForProject(proj);
-                for (Employee e: proj.getAssignedEmployees()){
+                for (Iterator<Employee> it = proj.getAssignedEmployees().iterator(); it.hasNext(); ){
+                    Employee e = it.next();
                     PayEmployee(e);
+                    e.setCurProject(null);
+                    it.remove();
+                    //cheesy way to no include list in json
+                    proj.SetListNUll();
                 }
                 proj.FinishProject();
             }
@@ -102,7 +121,7 @@ public class GameLogic {
 
         //Saving private employeeeeeee
         File fEmp = new File("src/main/resources/employeeData.json");
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         if (!fEmp.exists()) {
             try {
                 fEmp.createNewFile();
@@ -119,7 +138,7 @@ public class GameLogic {
         System.out.println("Saved employees");
         //saving the modified projects
         File fProj = new File("src/main/resources/projectData.json");
-        Gson gsonProj = new GsonBuilder().setPrettyPrinting().create();
+        Gson gsonProj = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         if (!fProj.exists()) {
             try {
                 fProj.createNewFile();

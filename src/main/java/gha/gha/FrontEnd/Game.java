@@ -62,11 +62,7 @@ public class Game extends Application {
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent t) {
-                try {
-                    new GameLogic().CloseApplication();
-                } catch (FileNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
+                GameLogic.getInstance().CloseApplication();
                 Platform.exit();
                 System.exit(0);
             }

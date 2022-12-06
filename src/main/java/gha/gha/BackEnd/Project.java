@@ -1,5 +1,6 @@
 package gha.gha.BackEnd;
 
+import com.google.gson.annotations.Expose;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -8,10 +9,16 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class Project extends Resource {
+    @Expose
     private double cost;
-    private final double value;
+    @Expose
+    private double value;
     private BigDecimal completion;
+    @Expose
+
     private int timeCost;
+    @Expose
+
     private final String description;
     private ObservableList<Employee> assignedEmployees;
 
@@ -51,6 +58,7 @@ public class Project extends Resource {
     public double getValue() {
         return value;
     }
+    public void setValue(double val) {value += val;}
 
     public double getCompletion() {
         return completion.doubleValue();
@@ -60,6 +68,8 @@ public class Project extends Resource {
     public ObservableList<Employee> getAssignedEmployees() {
         return assignedEmployees;
     }
+
+    public void SetListNUll() {assignedEmployees = null;}
 
     public void addAssignedEmployees(Employee e) {
         if (assignedEmployees == null) {
@@ -120,9 +130,8 @@ public class Project extends Resource {
         }
         if (assignedEmployees.size() > 0) {
             for (Employee employee : assignedEmployees) {
-                //TODO Ezt át kéne dolgozni, hogy egyes dolgozók egyszerre tudjanak hatni a dologra0 és legyen köze az időtartamnak az alkalmazottak képességeihez, Multithreading?
-                completion = BigDecimal.valueOf(completion.doubleValue() + (employee.getExperience()+employee.getWorkRate())/(double)timeCost).setScale(2,RoundingMode.HALF_UP);
-                //TODO scale to time cost and calculate change it dynamically, for every assigned employee
+
+                completion = BigDecimal.valueOf(completion.doubleValue() + (employee.getExperience()*employee.getWorkRate())/(double)timeCost).setScale(2,RoundingMode.HALF_UP);
                 System.out.println(completion);
             }
             if (completion.doubleValue() >= 1) {
