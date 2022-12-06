@@ -8,7 +8,10 @@ module gha.gha {
     requires org.kordamp.ikonli.javafx;
     requires eu.hansolo.tilesfx;
     requires com.google.gson;
+    requires junit;
 
+    exports gha.gha.Test;
+    opens gha.gha.Test to javafx.fxml;
     exports gha.gha.BackEnd;
     opens gha.gha.BackEnd to javafx.fxml,com.google.gson;
     exports gha.gha.FrontEnd;

@@ -58,6 +58,9 @@ dependencies {
     implementation 'eu.hansolo:toolbox:17.0.14'
     implementation 'org.openjfx:javafx-swing:19'
     implementation 'eu.hansolo:tilesfx:17.1.15'
+    implementation 'junit:junit:4.13.1'
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")

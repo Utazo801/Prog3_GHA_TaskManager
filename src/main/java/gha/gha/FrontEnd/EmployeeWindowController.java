@@ -108,20 +108,20 @@ public class EmployeeWindowController {
 
         expText = (TextField) root.lookup("#expText");
         if (expText != null) {
-            expText.setText(String.valueOf(e.getExperience()));
+            expText.setText(String.format("$%.2f",e.getExperience()));
             expText.setEditable(false);
         }
 
         workRateText = (TextField) root.lookup("#workRateLabel");
         if (workRateText != null) {
-            workRateText.setText(String.valueOf(e.getWorkRate()));
+            workRateText.setText(String.format("%.2f",e.getWorkRate()));
             workRateText.setEditable(false);
 
         }
 
         salaryText = (TextField) root.lookup("#salaryText");
         if (salaryText != null) {
-            salaryText.setText("$" + e.getSalary());
+            salaryText.setText(String.format("$%.2f", e.getSalary()));
             salaryText.setEditable(false);
 
         }
@@ -459,6 +459,7 @@ public class EmployeeWindowController {
         System.out.println("Validation input: " + validatorInput.get());
         System.out.println("CheckSum: " + checkSum.get());
         if (checkSum.get() > 0) {
+            assert saveBtn != null;
             saveBtn.setDisable(false);
             saveBtn.setOnAction(event -> {
                 // String name, double salary, double experience, double workRate, String picture, int age,String description, String hobby

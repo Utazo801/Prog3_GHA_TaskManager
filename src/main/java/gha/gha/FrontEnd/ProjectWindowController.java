@@ -4,7 +4,6 @@ import gha.gha.Services.ProjectRunningService;
 import gha.gha.BackEnd.Employee;
 import gha.gha.BackEnd.GameLogic;
 import gha.gha.BackEnd.Project;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,9 +17,6 @@ import java.util.Objects;
 
 public class ProjectWindowController {
 
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
     private Project p;
     private GameLogic gameLogic;
     @FXML
@@ -42,9 +38,6 @@ public class ProjectWindowController {
     private Button StartBtn;
 
     @FXML
-    private Button PauseBtn;
-
-    @FXML
     private ListView<gha.gha.BackEnd.Employee> EmployeeListView;
 
     @FXML
@@ -54,31 +47,28 @@ public class ProjectWindowController {
         this.p = p;
         this.gameLogic = gameLogic;
     }
-
-    public ProjectWindowController() {
-    }
-
-
+    public ProjectWindowController() {}
     public void display() {
+        Parent root;
         try {
             root = FXMLLoader.load(Objects.requireNonNull(ProjectWindowController.class.getResource("/ProjectView2_0.fxml")));
         } catch (IOException e) {
             throw new RuntimeException(e.getCause());
         }
-        scene = new Scene(root, 640, 640);
-        stage = new Stage();
+        Scene scene = new Scene(root, 640, 640);
+        Stage stage = new Stage();
         stage.initModality(Modality.WINDOW_MODAL);
         ProjectNameLabel = (Label) root.lookup("#ProjectNameLabel");
         if (ProjectNameLabel != null) ProjectNameLabel.setText(p.getName());
 
         CostLabel = (Label) root.lookup("#CostLabel");
-        if (CostLabel != null) CostLabel.setText("$" + p.getCost());
+        if (CostLabel != null) CostLabel.setText(String.format("$%.2f", p.getCost()));
 
         timeLabel = (Label) root.lookup("#timeLabel");
         if (timeLabel != null) timeLabel.setText(p.getTimeCost() + " sec");
 
         ValueLabel = (Label) root.lookup("#ValueLabel");
-        if (ValueLabel != null) ValueLabel.setText("$" + p.getValue());
+        if (ValueLabel != null) ValueLabel.setText( String.format("$%.2f", p.getValue()));
 
         DescTextArea = (TextArea) root.lookup("#DescTextArea");
         if (DescTextArea != null) DescTextArea.setText(p.getDescription());
@@ -119,25 +109,18 @@ public class ProjectWindowController {
                     alert.display("There is no one to work on the project,\n assign an employee!");
 
                 } else {
-                    //Will have to look into slowing down the progress of this shit
-
                     ProjectRunningService projService = new ProjectRunningService(p, ProjectProgBar, gameLogic);
                     ProjectProgBar.progressProperty().bind(projService.progressProperty());
                     projService.start();
-                }
-            });
-        }
-        PauseBtn = (Button) root.lookup("#PauseBtn");
-        if (PauseBtn != null) {
-            PauseBtn.setOnAction(e -> {
-                try {
-                    p.Pause();
-                } catch (InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
-        }
+                    if (p.getState() == Project.ProjectSate.RUNNING){
+                        StartBtn.setDisable(true);
 
+                    }
+
+                }
+
+            });
+        }
 
     }
 }

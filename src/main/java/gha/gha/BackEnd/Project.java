@@ -19,7 +19,7 @@ public class Project extends Resource {
     private int timeCost;
     @Expose
 
-    private final String description;
+    private  String description;
     private ObservableList<Employee> assignedEmployees;
 
     public enum ProjectSate {RUNNING, COMPLETED, IDLE, PAUSED}
@@ -37,14 +37,16 @@ public class Project extends Resource {
         this.state = ProjectSate.IDLE;
         completion = new BigDecimal("0.0");
     }
+    public Project(){
+        super();
+    }
 
     //Getters and Setters
     public ProjectSate getState() {
         return state;
     }
-
-    public void setState(ProjectSate state) {
-        this.state = state;
+    public void SetState(ProjectSate projectSate) {
+        state = projectSate;
     }
 
     public double getCost() {
@@ -73,18 +75,11 @@ public class Project extends Resource {
 
     public void addAssignedEmployees(Employee e) {
         if (assignedEmployees == null) {
-            assignedEmployees = FXCollections.observableArrayList(new ArrayList<Employee>());
+            assignedEmployees = FXCollections.observableArrayList(new ArrayList<>());
             //UpdateTimeCost();
         }
         assignedEmployees.add(e);
         System.out.println("Added Employee: " + e.getName() + " to Project " + getName());
-    }
-
-    private void UpdateTimeCost() {
-        double initialTimeCost = timeCost;
-        for (Employee e: assignedEmployees){
-            timeCost += initialTimeCost - (e.getExperience()/e.getWorkRate());
-        }
     }
 
     public int getTimeCost() {
@@ -97,38 +92,15 @@ public class Project extends Resource {
     }
 
     //Methods:
-
-
-    public void StartProject() {
-        if (state == ProjectSate.PAUSED) {
-            state = ProjectSate.RUNNING;
-            notify();
-        } else {
-            state = ProjectSate.RUNNING;
-            completion = new BigDecimal("0.0");
-        }
-    }
-
-    public void Pause() throws InterruptedException {
-        if (state == ProjectSate.RUNNING) {
-            setState(ProjectSate.PAUSED);
-            wait();
-        }
-    }
-
     public void FinishProject() {
-
-
         completion = BigDecimal.valueOf(Double.parseDouble("0.0"));
         state = ProjectSate.IDLE;
     }
-
-
     public void RunProject() {
-        if (state == null){
-            StartProject();
-        }
+
+        if (completion == null) completion = new BigDecimal("0.0");
         if (assignedEmployees.size() > 0) {
+            state = ProjectSate.RUNNING;
             for (Employee employee : assignedEmployees) {
 
                 completion = BigDecimal.valueOf(completion.doubleValue() + (employee.getExperience()*employee.getWorkRate())/(double)timeCost).setScale(2,RoundingMode.HALF_UP);
@@ -143,7 +115,6 @@ public class Project extends Resource {
         }
 
     }
-
     @Override
     public String toString() {
         return getName();

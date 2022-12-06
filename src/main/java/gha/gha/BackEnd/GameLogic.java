@@ -48,17 +48,26 @@ public class GameLogic {
 
     public void PayEmployee(Employee e){
         budget -= e.getSalary();
-        e.setExperience(e.getExperience()*1.01);
+        e.setExperience((e.getExperience()*1.01));
     }
     public void PayForProject(Project p){
         budget -= p.getCost();
-        p.setValue(p.getValue() *1.1);
+        if (p.getValue() < Double.MAX_VALUE - p.getValue()){
+            p.setValue(p.getValue() *1.01);
 
-        p.setCost(p.getCost() *1.02);
+        }
+        if (p.getCost() <Double.MAX_VALUE - p.getCost()){
+            p.setCost(p.getCost() *1.02);
+        }
+
     }
 
     public void addEmployee(Employee e){
         employees.add(e);
+    }
+
+    public void addProject(Project p) {
+        projects.add(p);
     }
     public void CheckStatusForProjects(){
         for (Project proj: projects) {

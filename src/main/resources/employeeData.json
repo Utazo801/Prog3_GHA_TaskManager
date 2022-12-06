@@ -51,7 +51,7 @@
   },
   {
     "salary": 1569.0,
-    "experience": 1.2,
+    "experience": 1.212,
     "workRate": 0.9,
     "description": "HELP",
     "picture": "C:\\Users\\Bence\\Desktop\\VS_Projects\\JAVA\\GHA\\src\\main\\java\\gha\\gha\\ImageResources\\20221109_004619_Bambi.jpg",
@@ -61,7 +61,7 @@
   },
   {
     "salary": 1896.0,
-    "experience": 1.212,
+    "experience": 1.2865624225284118,
     "workRate": 0.9,
     "description": "TEsting",
     "picture": "",
