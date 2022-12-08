@@ -14,7 +14,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
-import java.io.FileNotFoundException;
 import java.net.URL;
 
 import java.text.SimpleDateFormat;
@@ -24,6 +23,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The main window of the programme, it displays 2 ListViews, one for the projects, one for the employees
+ * On the bottom of the panel is a LineChart which updates every second and displays the current budget available.
+ * When the user click on any list element it pops up a new window with the selected element, where more details can be viewed.
+ * When a project successfully runs, the budget will update.
+ */
 public class GameWindowController implements Initializable {
     @FXML
     ListView<Project> projectListView;
@@ -33,6 +38,17 @@ public class GameWindowController implements Initializable {
     LineChart<String, Double> stonksChart;
     GameLogic gameLogic;
 
+
+    /**
+     *
+     * @param location
+     * The location used to resolve relative paths for the root object, or
+     * {@code null} if the location is not known.
+     *
+     * @param resources
+     * The resources used to localize the root object, or {@code null} if
+     * the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         gameLogic = GameLogic.getInstance();
@@ -65,6 +81,10 @@ public class GameWindowController implements Initializable {
             }
         });
 
+        /*
+          Code snippet to update the line chart. It sets and executor service, which then runs in the background to update
+          the chart every second. And it even limits the amount of nodes on the chart, to not bloat it.
+         */
         XYChart.Series<String, Double> series = new XYChart.Series<>();
         series.setName("Budget");
         stonksChart.getData().add(series);
@@ -95,6 +115,11 @@ public class GameWindowController implements Initializable {
     }
 
 
+    /**
+     * Handles the click event of the List view of the projects, it allows to open a new window.
+     * @param mouseEvent
+     * Enables to handle mouse clicks
+     */
     @FXML
     public void handleProjectMouseClick(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY || mouseEvent.getClickCount() == 2) {
@@ -113,6 +138,11 @@ public class GameWindowController implements Initializable {
         }
     }
 
+    /**
+     * Also handles the list click event for the employee list view.
+     * @param mouseEvent
+     * Enables to handle mouse clicks
+     */
     @FXML
     public void handleEmployeeMouseClick(MouseEvent mouseEvent) {
         if (mouseEvent.getButton() == MouseButton.PRIMARY || mouseEvent.getClickCount() == 2) {

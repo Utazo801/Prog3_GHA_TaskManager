@@ -2,7 +2,11 @@ package gha.gha.BackEnd;
 
 import com.google.gson.annotations.Expose;
 
+/**
+ * Base class, from which the Employees and Projects inherit.
+ */
 public class Resource  {
+
 
     @Expose
     protected String name;

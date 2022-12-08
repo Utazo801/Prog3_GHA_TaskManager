@@ -7,6 +7,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Pop up window to display errors to the user, such as when they clicked any of the listviews without selecting anything, or
+ * when they want to launch a project without any employee assigned to it.
+ */
 public class AlertDialog {
 
 

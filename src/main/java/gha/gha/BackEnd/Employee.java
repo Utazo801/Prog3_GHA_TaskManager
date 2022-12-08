@@ -2,6 +2,9 @@ package gha.gha.BackEnd;
 
 import com.google.gson.annotations.Expose;
 
+/**
+ * Employee class, contains data from a JSON file
+ */
 public class Employee extends Resource{
     @Expose
     private double salary;
@@ -19,6 +22,26 @@ public class Employee extends Resource{
     private int age;
 
     private Project curProject;
+
+    /**
+     *
+     * @param name
+     * Name of the employee
+     * @param salary
+     * salary of employee
+     * @param experience
+     * experience of employee in double
+     * @param workRate
+     * work rate of the employee in double
+     * @param picture
+     * profile picture
+     * @param age
+     * age of the employee
+     * @param description
+     * a short description
+     * @param hobby
+     * a word or a short string
+     */
 
     //name, salary, experience,workRate, picture, age, description, traits[], hobby
     public Employee(String name, double salary, double experience, double workRate, String picture, int age,String description, String hobby) {
@@ -39,7 +62,6 @@ public class Employee extends Resource{
     public double getSalary() {
         return salary;
     }
-
     public void setSalary(double salary) {
         this.salary = salary;
     }

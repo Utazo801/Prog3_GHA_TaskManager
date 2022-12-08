@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+/**
+ * Main Window for the application
+ */
 public class Game extends Application {
     Scene menuScene;
     Stage stage;
@@ -26,6 +29,12 @@ public class Game extends Application {
 
     private ScheduledExecutorService scheduledExecutorService;
 
+    /**
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
+     * Applications may create other stages, if needed, but they will not be
+     * primary stages.
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
@@ -36,17 +45,19 @@ public class Game extends Application {
         stage.setTitle("Task Tycoon!");
         stage.show();
 
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                //GameLogic.CloseApplication();
-                Platform.exit();
-                System.exit(0);
-            }
+        stage.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(0);
         });
 
     }
 
+    /**
+     *
+     * @param actionEvent
+     * The action listener listens for a click event on the start button
+     * When stage is closed there is an autosave foing on, that saves the current state of loaded files.
+     */
     @FXML
     public void startGame(ActionEvent actionEvent) throws IOException {
         FXMLLoader GameLoader = new FXMLLoader(Game.class.getResource("/GameWindow.fxml"));
@@ -57,17 +68,17 @@ public class Game extends Application {
         stage.show();
 
 
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent t) {
-                GameLogic.getInstance().CloseApplication();
-                Platform.exit();
-                System.exit(0);
-            }
+        stage.setOnCloseRequest(t -> {
+            GameLogic.getInstance().CloseApplication();
+            Platform.exit();
+            System.exit(0);
         });
     }
 
 
+    /**
+     * Stops the Java FX application
+     */
     @Override
     public void stop() throws Exception {
         super.stop();

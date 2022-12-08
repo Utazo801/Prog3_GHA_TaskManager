@@ -15,6 +15,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Display window for the selected projects. It displays the data of the selected project.
+ * When at least one employee is assigned, it enables the project to run as a background task.
+ * As the project runs it updates the progress bar at the bottom of the panel.
+ */
 public class ProjectWindowController {
 
     private Project p;
@@ -43,6 +48,16 @@ public class ProjectWindowController {
     @FXML
     private Label timeLabel;
 
+    /**
+     *
+     *
+     * To run a thread parallel with the main Java Fx Application thread one must use a Worker service. And that's what the
+     * ProjectRunningSurface solves. It launches a Task in a new Thread and manages the synchronisation with the main thread.
+     * @param p
+     * Project instance
+     * @param gameLogic
+     * backend instance
+     */
     public ProjectWindowController(Project p, GameLogic gameLogic) {
         this.p = p;
         this.gameLogic = gameLogic;
@@ -58,6 +73,8 @@ public class ProjectWindowController {
         Scene scene = new Scene(root, 640, 640);
         Stage stage = new Stage();
         stage.initModality(Modality.WINDOW_MODAL);
+
+        //Injecting project data.
         ProjectNameLabel = (Label) root.lookup("#ProjectNameLabel");
         if (ProjectNameLabel != null) ProjectNameLabel.setText(p.getName());
 
@@ -85,6 +102,7 @@ public class ProjectWindowController {
         stage.show();
 
 
+        //Custom employee data
         EmployeeListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Employee item, boolean empty) {
@@ -100,9 +118,9 @@ public class ProjectWindowController {
 
         StartBtn = (Button) root.lookup("#StartBtn");
         if (StartBtn != null) {
-            if (p.getAssignedEmployees() == null) {
-                StartBtn.setDisable(true);
-            }
+            if (p.getAssignedEmployees() == null) {StartBtn.setDisable(true);}
+            if (gameLogic.getBudget() < p.getCost()) { StartBtn.setDisable(true);}
+
             StartBtn.setOnAction(e -> {
                 if (EmployeeListView.getItems() == null) {
                     AlertDialog alert = new AlertDialog();

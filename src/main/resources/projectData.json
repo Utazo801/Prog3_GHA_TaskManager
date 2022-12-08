@@ -1,7 +1,7 @@
 [
   {
-    "cost": 500,
-    "value": 1250,
+    "cost": 500.0,
+    "value": 1250.0,
     "timeCost": 90,
     "description": "Qui elit amet sunt commodo ad elit adipisicing amet magna labore labore. Exercitation aliqua culpa labore enim Lorem. Sit aliquip est aute officia Lorem.\r\n",
     "name": "Haley"
@@ -42,8 +42,8 @@
     "name": "William"
   },
   {
-    "cost": 750,
-    "value": 2000,
+    "cost": 765.0,
+    "value": 4020.0,
     "timeCost": 7,
     "description": "Eiusmod occaecat ea sint id commodo. Aliqua Lorem incididunt dolor ipsum adipisicing consequat ea veniam irure nisi Lorem non labore. Velit anim in Lorem aliquip aliqua voluptate voluptate non duis voluptate officia cupidatat eiusmod. Commodo ipsum mollit sit eiusmod qui incididunt.\r\n",
     "name": "Lowe"

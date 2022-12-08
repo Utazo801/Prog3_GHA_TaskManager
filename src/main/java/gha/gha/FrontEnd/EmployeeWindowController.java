@@ -26,6 +26,11 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Display window for a selected employee, it shows all the loaded data from one employee. The user can select a new profile
+ * picture in the top right corner. The main function of this window is to select an assigned project for the selected employee, which is done
+ * using the choicebox at the bottom of the window.
+ */
 public class EmployeeWindowController {
 
     private Stage stage;
@@ -62,6 +67,13 @@ public class EmployeeWindowController {
     @FXML
     private GridPane ContentGrid;
 
+    /**
+     *
+     * @param e
+     * Selected employee from the Employee list on the front page.
+     * @param gameLogic
+     * Instance of the Singleton class, to reach the required project.
+     */
     public EmployeeWindowController(Employee e, GameLogic gameLogic) {
         this.e = e;
         this.gameLogic = gameLogic;
@@ -80,6 +92,12 @@ public class EmployeeWindowController {
         saveBtn = new Button("Save employee");
     }
 
+    /**
+     * The simple display method makes it possible to display the employee on the window. First it creates the stage and the scene
+     * then checks all the required FXML element if they exist in the file. After that the correct data is displayed.
+     * the ChoiceBox for the Projects is loaded with the correct data from GameLogic class and when one is selected it
+     * automatically makes the correct settings in the selected project and adds the employee to its list.
+     */
     public void display() {
         if (stage != null) {
             stage = null;
@@ -92,6 +110,9 @@ public class EmployeeWindowController {
             throw new RuntimeException(e);
         }
         scene = new Scene(root, 640, 640);
+
+        //Injection of employee data
+
 
         nameText = (TextField) root.lookup("#nameText");
         if (nameText != null) {
@@ -163,6 +184,7 @@ public class EmployeeWindowController {
             }
         }
 
+        //Cell factory to display specific attribute of project, this case the name
         assert assignProjectBox != null;
         assignProjectBox.setCellFactory(param -> new ListCell<>() {
             @Override
@@ -177,6 +199,7 @@ public class EmployeeWindowController {
             }
         });
 
+        //Listening for change in the project choice box
         assignProjectBox.setOnAction((event) -> {
             Project selectedItem = assignProjectBox.getSelectionModel().getSelectedItem();
             for (Project p: gameLogic.getProjects()){
@@ -193,6 +216,11 @@ public class EmployeeWindowController {
         stage.show();
     }
 
+    /**
+     * The method uses the exact same FXML template file with the added difference, that the user can edit it and add a new employee to the list with it.
+     * There is a validation system to check that only valid data is being put in the fields.
+     * When the system determined that enough data is put in the save button is enabled.
+     */
     public void DisplayNewEmployee() {
         stage = new Stage();
 
@@ -290,6 +318,7 @@ public class EmployeeWindowController {
             selectedItem.addAssignedEmployees(emp);
         });
 
+        //Save button to add employee to the employee list.
 
         assert saveBtn != null;
         saveBtn.setFont(new Font("Impact", 24));
@@ -300,6 +329,8 @@ public class EmployeeWindowController {
         ErrorLbl.setFont(new Font("Impact", 24));
         ErrorLbl.setTextFill(Color.RED);
 
+        //Data validation for the new employee data
+        //I use a checksum to validate that mostly correct data is put in.
 
         nameText.textProperty().addListener((arg0, oldNameValue, newNameValue) -> {
             AtomicInteger nameValidator = new AtomicInteger(-1);
@@ -325,6 +356,7 @@ public class EmployeeWindowController {
                     salaryValidator.addAndGet(1);
 
                 } catch (NumberFormatException e) {
+                    salaryValidator.addAndGet(salaryValidator.intValue()*-1);
                     ErrorLbl.setText("Not a number in salary");
 
                 }
@@ -347,6 +379,7 @@ public class EmployeeWindowController {
                     expValidator.addAndGet(1);
 
                 } catch (NumberFormatException e) {
+                    expValidator.addAndGet((int) (expValidator.intValue() * -1.0));
                     ErrorLbl.setText("Not a number in experience");
 
                 }
@@ -371,6 +404,7 @@ public class EmployeeWindowController {
                     ageValidator.addAndGet(1);
 
                 } catch (NumberFormatException e) {
+                    ageValidator.addAndGet(ageValidator.intValue()*-1);
                     ErrorLbl.setText("Not a number in age");
 
                 }
@@ -426,6 +460,7 @@ public class EmployeeWindowController {
                     workValidator.addAndGet(1);
                     workRateText.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.FULL)));
                 } catch (NumberFormatException e) {
+                    workValidator.addAndGet(workValidator.intValue() *-1);
                     ErrorLbl.setText("Not a number in work rate");
 
                 }
@@ -436,6 +471,9 @@ public class EmployeeWindowController {
             }
         });
 
+        //End of validation
+
+        //Save button activates once enough validation points are set
 
         saveBtn.setDisable(true);
         ContentGrid = (GridPane) root.lookup("#ContentGrid");
@@ -448,6 +486,11 @@ public class EmployeeWindowController {
 
     }
 
+    /**
+     * Method to check for valid user input
+     * @param validatorInput
+     * The validation process gives an Atomic integer which will be added to the checksum
+     */
     private void CheckValidationNum(AtomicInteger validatorInput) {
         if (validatorInput.get() < 0) {
             System.out.println("This input was not correct");
@@ -472,6 +515,9 @@ public class EmployeeWindowController {
         }
     }
 
+    /**
+     * When the ImageViewer Element is clicked a file chooser opens and let's the user change the profile picture of the employee
+     */
     @FXML
     public void handleMouseClick(MouseEvent event){
 

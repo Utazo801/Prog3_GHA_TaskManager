@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 
+/**
+ * Project class, loaded from JSON
+ */
 public class Project extends Resource {
     @Expose
     private double cost;
@@ -73,6 +76,11 @@ public class Project extends Resource {
 
     public void SetListNUll() {assignedEmployees = null;}
 
+    /**
+     * Adds a new employee to the assigned employees, if the list is null, it creates an instance of it
+     * @param e
+     * Employee instance
+     */
     public void addAssignedEmployees(Employee e) {
         if (assignedEmployees == null) {
             assignedEmployees = FXCollections.observableArrayList(new ArrayList<>());
@@ -92,10 +100,18 @@ public class Project extends Resource {
     }
 
     //Methods:
+
+    /**
+     * Sets the state of the project to completed, and resets the completion
+     */
     public void FinishProject() {
         completion = BigDecimal.valueOf(Double.parseDouble("0.0"));
         state = ProjectSate.IDLE;
     }
+
+    /**
+     * Runs the project once, calculates completion
+     */
     public void RunProject() {
 
         if (completion == null) completion = new BigDecimal("0.0");
