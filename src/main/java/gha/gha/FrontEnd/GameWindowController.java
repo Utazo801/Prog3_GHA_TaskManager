@@ -122,7 +122,7 @@ public class GameWindowController implements Initializable {
      */
     @FXML
     public void handleProjectMouseClick(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY || mouseEvent.getClickCount() == 2) {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2) {
             //Use ListView's getSelected Item
             if (projectListView.getSelectionModel().getSelectedItem() != null) {
                 Project p = projectListView.getSelectionModel()
@@ -145,7 +145,7 @@ public class GameWindowController implements Initializable {
      */
     @FXML
     public void handleEmployeeMouseClick(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseButton.PRIMARY || mouseEvent.getClickCount() == 2) {
+        if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount() == 2) {
             //Use ListView's getSelected Item
 
             if (employeeListView.getSelectionModel().getSelectedItem() != null) {
@@ -188,6 +188,7 @@ public class GameWindowController implements Initializable {
     @FXML
     public void handleDeleteEmployee(ActionEvent actionEvent) {
         gameLogic.getEmployees().remove(employeeListView.getSelectionModel().getSelectedItem());
+        employeeListView.setItems(gameLogic.getEmployees());
     }
 
 

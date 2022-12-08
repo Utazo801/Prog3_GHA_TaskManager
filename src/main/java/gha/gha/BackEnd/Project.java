@@ -105,7 +105,7 @@ public class Project extends Resource {
      * Sets the state of the project to completed, and resets the completion
      */
     public void FinishProject() {
-        completion = BigDecimal.valueOf(Double.parseDouble("0.0"));
+        completion = null;
         state = ProjectSate.IDLE;
     }
 

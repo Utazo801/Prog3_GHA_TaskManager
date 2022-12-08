@@ -129,7 +129,7 @@ public class EmployeeWindowController {
 
         expText = (TextField) root.lookup("#expText");
         if (expText != null) {
-            expText.setText(String.format("$%.2f",e.getExperience()));
+            expText.setText(String.format("%.2f",e.getExperience()));
             expText.setEditable(false);
         }
 
